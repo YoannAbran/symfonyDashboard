@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello BookListController!{% endblock %}
+
+{% block body %}
+<table class="">
+
+<thead>
+
+  <td scope='col'>nom utilisateur</td>
+  <td scope='col'>titre du livre</td>
+  <td scope='col'>categorie</td>
+  <td scope='col'>date achat</td>
+  <td scope='col'>date location</td>
+  <td scope='col'>date de retour</td>
+
+</thead>
+
+{{ dump(customerFlows) }}
+{% for customerFlow in customerFlows %}
+
+<tr>
+
+<td>{{ customerFlow.user.userName}}</td>
+
+<td>{{ customerFlow.book.title }}</td>
+<td> {{ customerFlow.book.category}}</td>
+
+
+{% if customerFlow.flow.rentDate == NULL %}
+<td>{{ customerFlow.flow.buyDate|date('Y-m-d')}}</td>
+<td></td>
+<td></td>
+
+{% else %}
+<td></td>
+<td>{{ customerFlow.flow.rentDate|date('Y-m-d')}}</td>
+<td>{{ customerFlow.flow.returnDate|date('Y-m-d')}}</td></tr>
+{% endif %}
+{% endfor %}
+
+</table>
+{% endblock %}
