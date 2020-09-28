@@ -18,7 +18,7 @@
             <div class="content row my-3">
                 <div class="col column">
                   <p>{{ book.getDescription | raw }}<p>
-                  <a href="{{ path('book', {'id': book.getId }) }}" class="btn btn-primary my-5">Acheter</a>
+                  <a href="{{ path('cart_add', {'id': book.getId }) }}" class="btn btn-primary my-5">Acheter</a>
                   <a href="{{ path('book', {'id': book.getId }) }}" class="btn btn-primary my-5">Louer</a>
                 </div>
             </div>
