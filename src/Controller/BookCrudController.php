@@ -26,7 +26,7 @@ class BookCrudController extends AbstractCrudController
             IdField::new('id')->hideOnForm(),
             TextField::new('title'),
             TextField::new('ref'),
-            TextField::new('description'),
+            TextEditorField::new('description'),
             TextField::new('category'),
             MoneyField::new('buyPrice')->setCurrency('EUR'),
             MoneyField::new('soldPrice')->setCurrency('EUR'),

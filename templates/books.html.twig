@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}BOOKING - Nos livres{% endblock %}
+
+
+{% block body %}
+
+    <section class="books">
+
+        {% for book in books %}
+        <article class="my-3">
+            <h2>{{ book.getTitle }}</h2>
+            <div class="metadata">Catégorie : {{ book.getCategory}}</div>
+            <div class="content row my-3">
+                <div class="col-2">
+                  <img class="w-100" src="img/photo/{{ book.getPhoto }}" alt="Couverture du livre">
+                </div>
+                <div class="col column">
+                  <p>{{ book.getDescription | raw }}<p>
+                  <a href="{{ path('book', {'id': book.getId }) }}" class="btn btn-primary my-3">Détails</a>
+                </div>
+            </div>
+            <hr>
+        </article>
+      {% endfor %}
+
+    </section>
+
+{% endblock %}

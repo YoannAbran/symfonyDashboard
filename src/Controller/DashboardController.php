@@ -31,8 +31,40 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linktoDashboard('Dashboard', 'fa fa-home');
-        yield MenuItem::linkToCrud('Book', 'icon class', Book::class);
-        yield MenuItem::linkToCrud('User', 'icon class', User::class);
-        yield MenuItem::linkToRoute('Register', 'icon class', 'app_register');
+        yield MenuItem::linkToCrud('Livres', 'icon class', Book::class);
+        yield MenuItem::linkToCrud('Utilisateurs', 'icon class', User::class);
+        // yield MenuItem::linkToRoute('Register', 'icon class', 'app_register'); // Inutile car lien déjà présent sur le navBar
+        yield MenuItem::linkToRoute('Retour accueil', 'icon class', 'home');
     }
+
+    /**
+     * @Route("/", name="home")
+     */
+    public function home()
+    {
+        return $this->render('home.html.twig');
+    }
+
+    /**
+     * @Route("/books", name="books")
+     */
+    public function books()
+    {
+      $repo = $this->getDoctrine()->getRepository(Book::class);
+      $books = $repo->findAll();
+      return $this->render('books.html.twig', [
+          'books' => $books
+      ]);
+    }
+
+    /**
+     * @Route("/books/{id}", name="book")
+     */
+    public function show($id)
+    {
+        $repo = $this->getDoctrine()->getRepository(Book::class);
+        $book = $repo->find($id);
+        return $this->render('book.html.twig', ['book' => $book]);
+        }
+
 }
