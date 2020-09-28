@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}BOOKING - {{ book.getTitle }}{% endblock %}
+
+
+{% block body %}
+
+    <section class="book d-flex column">
+
+        <div class="col-4">
+          <img class="w-100" src="../img/photo/{{ book.getPhoto }}" alt="Couverture du livre">
+        </div>
+
+        <article class="my-3">
+
+            <h2>{{ book.getTitle }}</h2>
+            <div class="metadata">Catégorie : {{ book.getCategory}}</div>
+            <div class="content row my-3">
+                <div class="col column">
+                  <p>{{ book.getDescription | raw }}<p>
+                  <a href="{{ path('cart_add', {'id': book.getId }) }}" class="btn btn-primary my-5">Acheter</a>
+                  <a href="{{ path('book', {'id': book.getId }) }}" class="btn btn-primary my-5">Louer</a>
+                </div>
+            </div>
+            <hr>
+        </article>
+
+
+    </section>
+
+{% endblock %}

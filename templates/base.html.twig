@@ -17,35 +17,29 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarColor01">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('books') -}}">Notre catalogue</a>
+                <ul class="navbar-nav mx-5">
+                    <li class="nav-item mx-3">
+                        <a class="nav-link" href="{{ path('books') -}}">Nos Livres</a>
                     </li>
 
                     {% if not app.user %}
-                        <li class="nav-item">
+                        <li class="nav-item mx-3">
                             <a class="nav-link" href="{{ path('app_login') }}">Se connecter</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item mx-3">
                             <a class="nav-link" href="{{ path('app_register') }}">S'enregistrer</a>
                         </li>
                     {% else %}
                         {% if is_granted('ROLE_ADMIN') %}
-                            <li class="nav-item">
+                            <li class="nav-item mx-3">
                                 <a class="nav-link" href="{{ path('admin') }}">Administration</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ path('cart_index') }}">Mon panier</a>
-                            </li>
                           {% elseif is_granted('ROLE_USER') %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ path('home') }}">Mon panier</a>
-                            </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ path('cart_index') }}">Mon panier</a>
                             </li>
                         {% endif %}
-                        <li class="nav-item">
+                        <li class="nav-item mx-3">
                             <a class="nav-link" href="{{ path('app_logout') }}">Se déconnecter</a>
                         </li>
                     {% endif %}
