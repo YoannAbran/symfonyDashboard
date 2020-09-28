@@ -31,7 +31,6 @@ class BookCrudController extends AbstractCrudController
             MoneyField::new('buyPrice')->setCurrency('EUR'),
             MoneyField::new('soldPrice')->setCurrency('EUR'),
             MoneyField::new('rentPrice')->setCurrency('EUR'),
-
             ImageField::new('photoFile')->hideOnIndex(),
             ImageField::new('photo')
             ->setBasePath('/img/photo')
