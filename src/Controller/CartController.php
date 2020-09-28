@@ -22,7 +22,7 @@ class CartController extends AbstractController
 
       $session = $request->getSession();
 
-      $panier =  $session->get('panier', []);
+      // $panier =  $session->get('panier', []);
 
       if(!empty($panier[$id])){
         $panier[$id]++;
@@ -30,7 +30,7 @@ class CartController extends AbstractController
         $panier[$id] = 1;
       }
 
-      session->set('panier', $panier);
+      // session->set('panier', $panier);
 
       dd($session->get('panier'));
     }

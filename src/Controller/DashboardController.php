@@ -35,4 +35,26 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('User', 'icon class', User::class);
         yield MenuItem::linkToRoute('Register', 'icon class', 'app_register');
     }
+
+
+
+
+    /**
+     * @Route("/", name="home")
+     */
+    public function home()
+    {
+        return $this->render('home.html.twig');
+    }
+
+    /**
+     * @Route("/books", name="books")
+     */
+    public function books()
+    {
+        return $this->render('books.html.twig');
+    }
+
+
+
 }
