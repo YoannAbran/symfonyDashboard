@@ -9,7 +9,7 @@ easy_admin:
       Livres:
         class: App\Entity\Livres
         list:
-          fields:        
+          fields:
             - { property: 'photo', type: 'image', base_path: '%%app.path.photo_image%' }
 
         show:

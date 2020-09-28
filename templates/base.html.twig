@@ -34,9 +34,15 @@
                             <li class="nav-item mx-3">
                                 <a class="nav-link" href="{{ path('admin') }}">Administration</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('cart_index') }}">Mon panier</a>
+                            </li>
                           {% elseif is_granted('ROLE_USER') %}
                             <li class="nav-item mx-3">
                                 <a class="nav-link" href="{{ path('home') }}">Mon panier</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('cart_index') }}">Mon panier</a>
                             </li>
                         {% endif %}
                         <li class="nav-item mx-3">
