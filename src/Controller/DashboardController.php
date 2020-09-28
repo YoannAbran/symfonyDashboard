@@ -37,9 +37,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToRoute('Retour accueil', 'icon class', 'home');
     }
 
-
-
-
     /**
      * @Route("/", name="home")
      */
@@ -53,9 +50,21 @@ class DashboardController extends AbstractDashboardController
      */
     public function books()
     {
-        return $this->render('books.html.twig');
+      $repo = $this->getDoctrine()->getRepository(Book::class);
+      $books = $repo->findAll();
+      return $this->render('books.html.twig', [
+          'books' => $books
+      ]);
     }
 
-
+    /**
+     * @Route("/books/{id}", name="book")
+     */
+    public function show($id)
+    {
+        $repo = $this->getDoctrine()->getRepository(Book::class);
+        $book = $repo->find($id);
+        return $this->render('book.html.twig', ['book' => $book]);
+        }
 
 }
