@@ -74,4 +74,20 @@ class CartController extends AbstractController
       return $this->redirectToRoute("cart_index");
     }
 
+    /**
+     * @Route("/panier/removeAll", name="removeAll")
+     */
+    public function removeAll(Session $session ){
+      $panier = $session->get ('panier', []);
+
+
+        unset($panier);
+
+      $session->set('panier', []);
+
+
+
+      return $this->redirectToRoute("cart_index");
+    }
+
 }
