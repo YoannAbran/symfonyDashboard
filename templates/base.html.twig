@@ -17,7 +17,7 @@
         {% block stylesheets %}{% endblock %}
 
     </head>
-    
+
     <body>
 
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -45,10 +45,10 @@
                                 <a class="nav-link" href="{{ path('admin') }}">Administration</a>
                             </li>
                           {% elseif is_granted('ROLE_USER') %}
-                            <li class="nav-item">
+                            <li class="nav-item mx-3">
                                 <a class="nav-link" href="{{ path('cart_index') }}">Mon panier</a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item mx-3">
                                 <a class="nav-link" href="{{ path('customerList') }}">Mon compte</a>
                             </li>
                         {% endif %}
