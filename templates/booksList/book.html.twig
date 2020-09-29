@@ -22,10 +22,15 @@
                 <div class="col column">
                   <p>{{ book.getDescription | raw }}<p>
 
+<<<<<<< HEAD
+                  {% if app.user and book.getStock > 1 %}
+                  <a href="{{ path('cart_add', {'id': book.getId, 'action' : 'achat'}) }}" class="btn btn-primary my-5">Acheter ce livre pour {{ book.getSoldPrice }} €</a>
+=======
                   {% if app.user and book.getStock > 0 %}
                   <a href="{{ path('cart_add', {'id': book.getId,'action':'acheter' }) }}" class="btn btn-primary my-5">Acheter ce livre pour {{ book.getSoldPrice }} €</a>
+>>>>>>> 52ab1a4d10394215eefcd19ace07389f2373b8a4
                   <span class="mx-3 font-italic">ou</span>
-                  <a href="{{ path('cart_add', {'id': book.getId }) }}" class="btn btn-primary my-5">Louer ce livre pour {{ book.getRentPrice }} € par semaine</a>
+                  <a href="{{ path('cart_add', {'id': book.getId, 'action' : 'location' }) }}" class="btn btn-primary my-5">Louer ce livre pour {{ book.getRentPrice }} € par semaine</a>
 
                   {% elseif app.user and book.getStock <= 0 %}
                   <a href="{{ path('books') }}" class="btn btn-primary my-5">Désolé, ce livre est actuellement épuisé</a>

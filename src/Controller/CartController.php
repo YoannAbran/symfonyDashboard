@@ -27,19 +27,29 @@ class CartController extends AbstractController
           ];
         }
 
-        $total = 0;
+    $total = 0;
 
-        foreach ($panierWithData as $item) {
-          $totalItem = $item['book']->getSoldPrice() * $item['quantity'];
-          $total += $totalItem;
-        }
-
-        return $this->render('cart/index.html.twig', [
-          'panierWithData' => $panierWithData,
-          'total' => $total
-        ]);
-
+  if  (isset($_GET['action'])) {
+    if ($_GET['action'] == 'achat') {
+      foreach ($panierWithData as $item) {
+        $totalItem = $item['book']->getSoldPrice() * $item['quantity'];
+        $total += $totalItem;
+      }
     }
+
+  else if ($_GET['action'] == 'location') {
+      foreach ($panierWithData as $item) {
+        $totalItem = $item['book']->getRentPrice() * $item['quantity'];
+        $total += $totalItem;
+        }
+      }
+
+      }
+      return $this->render('cart/index.html.twig', [
+      'panierWithData' => $panierWithData,
+      'total' => $total]);
+    }
+
 
     /**
      * @Route("/panier/ad/{id}", name="cart_add")
