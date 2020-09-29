@@ -27,8 +27,17 @@ class CartController extends AbstractController
           ];
         }
 
+        $total = 0;
 
-        return $this->render('cart/index.html.twig', ['panierWithData' => $panierWithData]);
+        foreach ($panierWithData as $item) {
+          $totalItem = $item['book']->getSoldPrice() * $item['quantity'];
+          $total += $totalItem;
+        }
+
+        return $this->render('cart/index.html.twig', [
+          'panierWithData' => $panierWithData,
+          'total' => $total
+        ]);
 
     }
 
@@ -49,4 +58,20 @@ class CartController extends AbstractController
 
       return $this->redirectToRoute("cart_index");
     }
+
+    /**
+     * @Route("/panier/remove/{id}", name="cart_remove")
+     */
+    public function remove($id, Session $session ){
+      $panier = $session->get ('panier', []);
+
+      if(!empty($panier[$id])){
+        unset($panier[$id]);
+      }
+
+      $session->set('panier', $panier);
+
+      return $this->redirectToRoute("cart_index");
+    }
+
 }
