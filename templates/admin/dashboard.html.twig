@@ -1,5 +1,49 @@
 {% extends '@EasyAdmin/page/content.html.twig' %}
-{% block content %}
 
+
+{% block content %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<div class="container-fluid d-flex flex-column ">
+<div class="container-fluid d-flex ">
+
+
+<div class="robust-content content container-fluid pt-5 ">
+        <div class="content-wrapper">
+
+            <div class="" id="div_chart1" ></div>
+
+            <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+            <script type="text/javascript">
+                {{ gc_draw(piechart, 'div_chart1') }}
+            </script>
+
+        </div>
+    </div>
+    <div class="robust-content content container-fluid pt-5 ">
+            <div class="content-wrapper r">
+
+                <div class="" id="div_chart3" ></div>
+
+                <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                <script type="text/javascript">
+                    {{ gc_draw(pierentchart, 'div_chart3') }}
+                </script>
+
+            </div>
+        </div>
+        </div>
+<div class="robust-content content container-fluid  ">
+        <div class="content-wrapper">
+
+            <div class="" id="div_chart2" ></div>
+
+            <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+            <script type="text/javascript">
+                {{ gc_draw(barchart, 'div_chart2') }}
+            </script>
+
+        </div>
+    </div>
+</div>
 
 {% endblock %}
