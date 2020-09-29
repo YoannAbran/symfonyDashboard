@@ -8,54 +8,64 @@ use App\Entity\Book;
 use App\Entity\User;
 use App\Entity\CustomerFlow;
 use App\Entity\Flow;
+use App\Repository\BookRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class BookBuyController extends AbstractController
 {
     /**
-     * @Route("/bookBuy/{id}", name="bookBuy")
+     * @Route("/bookBuy", name="bookBuy")
      */
 
-     public function getBuyBook($id)
+     public function getBuyBook(Session $session, BookRepository $bookRepository)
      {
        $em = $this->getDoctrine()->getManager();
-       $book = $em->getRepository(Book::class)
-                  ->find($id);
 
-              $stock = $book->getStock();
-              $sold = $book->getSold();
+       $panier = $session->get('panier', []);
 
-              if ($stock>0){
+       $panierWithData = [];
+
+       foreach($panier as $id => $quantity){
+         $panierWithData[] = [
+           'book' => $bookRepository->find($id),
+           'quantity' => $quantity
+         ];
+       }
+
+
+
                 $user = $this->getUser();
-                $user->getUserName();
-                $getUser = $em->getRepository(User::class)
-                           ->find($user);
 
-              $book->setStock($stock-1);
-              $book->setSold($sold+1);
-              $em->flush();
+        foreach ($panierWithData as $item) {
+          $user = $this->getUser();
+          $stock = $item['book']->getStock();
+          $sold = $item['book']->getSold();
+          $id = $item['book']->getId();
+          $book = $em->getRepository(Book::class)
+                    ->find($id);
+          $quantity = $item['quantity'];
+
+              $book->setStock($stock-$quantity);
+              $book->setSold($sold+$quantity);
 
               $date = new \DateTime('now');
               $flow = new Flow;
               $flow->setBook($book);
               $flow->setBuyDate($date);
               $em->persist($flow);
-              $em->flush();
 
-              $getFlow = $em->getRepository(Flow::class)
-                         ->find($flow);
               $customerFlow = new CustomerFlow;
-              $customerFlow->setUser($getUser);
+              $customerFlow->setUser($user);
               $customerFlow->setBook($book);
-              $customerFlow->setFlow($getFlow);
-              $em->persist($customerFlow);
+              $customerFlow->setFlow($flow);
+              $em->merge($customerFlow);
               $em->flush();
-              return $this->redirectToRoute('bookList');
-}
-else {
-  return new Response('nous sommes désolé nous n\'avons plus ce livre en stock');
-}
+              $em->clear();
+              }
+              return $this->redirectToRoute('removeAll');
+
 
      }
 

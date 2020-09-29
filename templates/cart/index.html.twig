@@ -4,13 +4,13 @@
 
 {% block body %}
 
-  <h1>Votre panier</h1>
+  <h1 class="my-3">Votre panier</h1>
 
   {% if panierWithData | length > 0 %}
   <table class="table">
     <tbody>
       <thead>
-        <tr>
+        <tr  class="text-center">
           <th scope="col">Titre</th>
           <th scope="col">Prix</th>
           <th scope="col">Quantité</th>
@@ -21,28 +21,28 @@
 
       {% for item in panierWithData %}
         <tr>
-        <td>{{ item.book.title }}</td>
-        <td>{{ item.book.soldPrice }}</td>
-        <td>{{ item.quantity }}</td>
-        <td>{{ item.book.soldPrice * item.quantity }}</td>
-        <td>
-          <a href="{{ path('cart_remove', {'id': item.book.id}) }}" class="btn btn-danger">
-            <i class="fas fa-trash"></i>
-          </a>
-        </td>
+            <td class="text-left col-8"><img class="img-fluid col-2" src="img/photo/{{ item.book.photo }}">{{ item.book.title }}</td>
+            <td class="text-center col-1 align-middle">{{ item.book.soldPrice }} €</td>
+            <td class="text-center col-1 align-middle">{{ item.quantity }}</td>
+            <td class="text-center col-1 align-middle">{{ item.book.soldPrice * item.quantity }} €</td>
+            <td class="align-middle">
+              <a href="{{ path('cart_remove', {'id': item.book.id}) }}" class="btn btn-danger">
+                <i class="fas fa-trash"></i>
+              </a>
+            </td>
         </tr>
       {% endfor %}
     </tbody>
     <tfoot>
       <tr>
         <td colspan="3" class="text-right">Total :</td>
-        <td>{{ total }}</td>
+        <td class="text-center col-2 align-middle">{{ total }} €</td>
         <td></td>
       </tr>
     </tfoot>
   </table>
   {% else %}
-    <p>c'est vide !</p>
+    <p>C'est vide !</p>
   {% endif %}
-
+<a href="{{ path('bookBuy',{'data':panierWithData}) }}" class="btn btn-primary">
 {% endblock %}

@@ -22,29 +22,31 @@ class BookRepository extends ServiceEntityRepository
     // /**
     //  * @return Book[] Returns an array of Book objects
     //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('b')
-            ->andWhere('b.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('b.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Book
-    {
-        return $this->createQueryBuilder('b')
-            ->andWhere('b.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
+  public function getSumBuyPrice()
+  {
+    return $this->createQueryBuilder('b')
+    ->select('SUM(b.buyPrice) AS buyP, b.category, b.stock')
+    ->groupBy('b.category')
+    ->getQuery()
+    ->getResult();
+  }
+
+  public function getSumSoldPrice()
+  {
+    return $this->createQueryBuilder('b')
+    ->select('SUM(b.soldPrice) AS soldP, b.category, b.sold')
+    ->groupBy('b.category')
+    ->getQuery()
+    ->getResult();
+  }
+
+  public function getSumRentPrice()
+  {
+    return $this->createQueryBuilder('b')
+    ->select('SUM(b.rent) AS rentL, b.category,b.rent')
+    ->groupBy('b.category')
+    ->getQuery()
+    ->getResult();
+  }
 }

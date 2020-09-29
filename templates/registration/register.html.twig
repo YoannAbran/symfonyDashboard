@@ -12,10 +12,42 @@
 
     {{ form_start(registrationForm) }}
         {{ form_row(registrationForm.username, {'label': "Nom d'utilisateur", 'attr': {'placeholder': "Indiquez votre nom ou speudo"}} ) }}
-        {{ form_row(registrationForm.plainPassword, {'label': "Votre mot de passe", 'attr': {'placeholder': "Mot de passe"}} ) }}
         {{ form_row(registrationForm.email, {'label': "Adresse email", 'attr': {'placeholder': "Indiquer votre adresse email"}} ) }}
-        {{ form_row(registrationForm.agreeTerms, {'label': "J'accepte les conditions d'utilisation"} ) }}
+        {{ form_row(registrationForm.plainPassword) }}
+
+        <div class="row">
+            {{ form_row(registrationForm.agreeTerms, {'label': "J'accepte les"} ) }}
+            <a id="FooterSpy" href="#staticBackdrop" data-toggle="modal" class="modal-trigger">&nbsp; conditions d'utilisation</a>
+        </div>
 
         <button type="submit" class="btn btn-lg btn-primary mt-3">S'enregistrer</button>
     {{ form_end(registrationForm) }}
+
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">BOOKING - Condition d'utilisation</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>BOOKING  à raison et peut faire ce qu'il veut avec vos données !<br>
+            Vous n'avez le droit à rien et nous faison ce qui nous plait !<br>
+            Si cela ne vous plait pas, tant pis, allez voir ailleur si vous y êtes.<br>
+            <br>
+            Bisous,<br>
+            <br>
+            L'équipe BOOKING</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">J'ai compris</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
 {% endblock %}
