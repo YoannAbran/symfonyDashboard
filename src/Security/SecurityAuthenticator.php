@@ -98,6 +98,12 @@ class SecurityAuthenticator extends AbstractFormLoginAuthenticator implements Pa
 
         // For example : return new RedirectResponse($this->urlGenerator->generate('some_route'));
       //  throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
+
+      // Permet de récupérer l'id du livre sur le quel le user était avant de se connecter et donc de renvoyer le user sur la page du livre où il était
+      if (isset($_GET['book'])) {
+        $id = $_GET['book'];
+        return new RedirectResponse($this->urlGenerator->generate('book', ['id'=>$id]));
+      }
       return new RedirectResponse($this->urlGenerator->generate('books')); // Par défaut, c'était 'admin'
     }
 
