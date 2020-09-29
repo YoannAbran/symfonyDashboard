@@ -53,7 +53,7 @@ class DashboardController extends AbstractDashboardController
     {
       $repo = $this->getDoctrine()->getRepository(Book::class);
       $books = $repo->findAll();
-      return $this->render('books.html.twig', [
+      return $this->render('booksList/books.html.twig', [
           'books' => $books
       ]);
     }
@@ -65,7 +65,7 @@ class DashboardController extends AbstractDashboardController
     {
         $repo = $this->getDoctrine()->getRepository(Book::class);
         $book = $repo->find($id);
-        return $this->render('book.html.twig', ['book' => $book]);
+        return $this->render('booksList/book.html.twig', ['book' => $book]);
         }
 
 }
