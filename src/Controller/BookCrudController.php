@@ -11,6 +11,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class BookCrudController extends AbstractCrudController
@@ -28,9 +29,9 @@ class BookCrudController extends AbstractCrudController
             TextField::new('ref'),
             TextEditorField::new('description'),
             TextField::new('category'),
-            MoneyField::new('buyPrice')->setCurrency('EUR'),
-            MoneyField::new('soldPrice')->setCurrency('EUR'),
-            MoneyField::new('rentPrice')->setCurrency('EUR'),
+            NumberField::new('buyPrice'),
+            NumberField::new('soldPrice'),
+            NumberField::new('rentPrice'),
             ImageField::new('photoFile')->hideOnIndex(),
             ImageField::new('photo')
             ->setBasePath('/img/photo')

@@ -4,8 +4,45 @@
 
 {% block body %}
 
-    <h1>Votre panier</h1>
+  <h1>Votre panier</h1>
 
+  {% if panierWithData | length > 0 %}
+  <table class="table">
+    <tbody>
+      <thead>
+        <tr>
+          <th scope="col">Titre</th>
+          <th scope="col">Prix</th>
+          <th scope="col">Quantité</th>
+          <th scope="col">Total</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
 
-  <p>c'est vide !</p>
+      {% for item in panierWithData %}
+        <tr>
+        <td>{{ item.book.title }}</td>
+        <td>{{ item.book.soldPrice }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>{{ item.book.soldPrice * item.quantity }}</td>
+        <td>
+          <a href="{{ path('cart_remove', {'id': item.book.id}) }}" class="btn btn-danger">
+            <i class="fas fa-trash"></i>
+          </a>
+        </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="3" class="text-right">Total :</td>
+        <td>{{ total }}</td>
+        <td></td>
+      </tr>
+    </tfoot>
+  </table>
+  {% else %}
+    <p>c'est vide !</p>
+  {% endif %}
+
 {% endblock %}
