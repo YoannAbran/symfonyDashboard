@@ -40,7 +40,6 @@
                         </li>
                     {% else %}
                         {% if is_granted('ROLE_ADMIN') %}
-<<<<<<< HEAD
                             <li class="nav-item mx-3">
                                 <a class="nav-link" href="{{ path('admin') }}">Administration</a>
                             </li>
@@ -49,10 +48,6 @@
                             </li>
                             <li class="nav-item mx-5">
                                 <a class="nav-link" href="{{ path('customerList') }}"><i class="fas fa-user-alt"></i> Mon compte</a>
-=======
-                            <li class="nav-item mx-5">
-                                <a class="nav-link" href="{{ path('admin') }}"><i class="fas fa-tools"></i> Administration</a>
->>>>>>> 5621d60c2d672c2872c453c885ae0580b1ce5d73
                             </li>
                             <li class="nav-item mx-5">
                                 <a class="nav-link" href="{{ path('app_logout') }}"><i class="fas fa-sign-out-alt"></i> Se déconnecter</a>
@@ -69,19 +64,7 @@
                               <a class="nav-link" href="{{ path('app_logout') }}"><i class="fas fa-sign-out-alt"></i> Se déconnecter</a>
                           </li>
                         {% endif %}
-<<<<<<< HEAD
 
-=======
-                        <li class="nav-item mx-5">
-                            <a class="nav-link" href="{{ path('cart_index') }}"><i class="fas fa-shopping-basket"></i> Mon panier<span class=" px-1 ml-1 text-light rounded-circle bg-info text-center">{{ app.session.get('panier') | length + app.session.get('panierRent') | length }}</span></a>
-                        </li>
-                        <li class="nav-item mx-5">
-                            <a class="nav-link" href="{{ path('customerList') }}"><i class="fas fa-user-alt"></i> Mon compte</a>
-                        </li>
-                        <li class="nav-item mx-5">
-                            <a class="nav-link" href="{{ path('app_logout') }}"><i class="fas fa-sign-out-alt"></i> Se déconnecter</a>
-                        </li>
->>>>>>> 5621d60c2d672c2872c453c885ae0580b1ce5d73
                     {% endif %}
                 </ul>
             </div>
