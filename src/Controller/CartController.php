@@ -16,12 +16,21 @@ class CartController extends AbstractController
      */
     public function index(Session $session, BookRepository $bookRepository)
     {
-        $panier = $session->get('panier', []);
+      $panierRent = $session->get('panierRent', []);
+      $panier = $session->get('panier', []);
 
-        $panierWithData = [];
+        $panierAchat = [];
+        $panierLocation = [];
 
         foreach($panier as $id => $quantity){
-          $panierWithData[] = [
+          $panierAchat[] = [
+            'book' => $bookRepository->find($id),
+            'quantity' => $quantity
+          ];
+        }
+
+        foreach($panierRent as $id => $quantity){
+          $panierLocation[] = [
             'book' => $bookRepository->find($id),
             'quantity' => $quantity
           ];
@@ -29,24 +38,20 @@ class CartController extends AbstractController
 
     $total = 0;
 
-  if  (isset($_GET['action'])) {
-    if ($_GET['action'] == 'achat') {
-      foreach ($panierWithData as $item) {
+      foreach ($panierAchat as $item) {
         $totalItem = $item['book']->getSoldPrice() * $item['quantity'];
         $total += $totalItem;
       }
-    }
 
-  else if ($_GET['action'] == 'location') {
-      foreach ($panierWithData as $item) {
+      foreach ($panierLocation as $item) {
         $totalItem = $item['book']->getRentPrice() * $item['quantity'];
         $total += $totalItem;
         }
-      }
 
-      }
+
       return $this->render('cart/index.html.twig', [
-      'panierWithData' => $panierWithData,
+      'panierAchat' => $panierAchat,
+      'panierLocation' => $panierLocation,
       'total' => $total]);
     }
 
@@ -70,6 +75,24 @@ class CartController extends AbstractController
     }
 
     /**
+     * @Route("/panier/rent/{id}", name="cart_rent")
+     */
+    public function rent($id, Session $session){
+
+      $panierRent =  $session->get('panierRent', []);
+
+      if(!empty($panierRent[$id])){
+        $panierRent[$id]++;
+      } else {
+        $panierRent[$id] = 1;
+      }
+
+      $session->set('panierRent', $panierRent);
+
+      return $this->redirectToRoute("cart_index");
+    }
+
+    /**
      * @Route("/panier/remove/{id}", name="cart_remove")
      */
     public function remove($id, Session $session ){
@@ -85,17 +108,33 @@ class CartController extends AbstractController
     }
 
     /**
+     * @Route("/panier/removeRent/{id}", name="cart_removeRent")
+     */
+    public function removeRent($id, Session $session ){
+
+      $panierRent = $session->get ('panierRent', []);
+
+      if(!empty($panierRent[$id])){
+        unset($panierRent[$id]);
+      }
+
+      $session->set('panierRent', $panierRent);
+
+      return $this->redirectToRoute("cart_index");
+    }
+
+    /**
      * @Route("/panier/removeAll", name="removeAll")
      */
     public function removeAll(Session $session ){
-      $panier = $session->get ('panier', []);
 
+      $panier = $session->get ('panier', []);
+      $panierRent = $session->get ('panierRent', []);
 
         unset($panier);
-
+        unset($panierRent);
       $session->set('panier', []);
-
-
+      $session->set('panierRent', []);
 
       return $this->redirectToRoute("cart_index");
     }

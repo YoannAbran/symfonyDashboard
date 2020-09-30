@@ -14,9 +14,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 use App\Entity\Book;
 use App\Entity\User;
 
-
-
-
 class DashboardController extends AbstractDashboardController
 {
     /**
@@ -24,57 +21,57 @@ class DashboardController extends AbstractDashboardController
      */
     public function index(): Response
     {
-      $buyPrices = $this->getDoctrine()
+        $buyPrices = $this->getDoctrine()
                         ->getRepository(Book::class)
                         ->getSumBuyPrice();
-      $soldPrices = $this->getDoctrine()
+        $soldPrices = $this->getDoctrine()
                         ->getRepository(Book::class)
                         ->getSumSoldPrice();
-      $rentPrices = $this->getDoctrine()
+        $rentPrices = $this->getDoctrine()
                         ->getRepository(Book::class)
                         ->getSumRentPrice();
 
-//chart pie buy price categorie
-      $data = [['Category','Prix']];
-      foreach ($buyPrices as $buyPrice) {
-        $data[] = array($buyPrice['category'],$buyPrice['buyP']*$buyPrice['stock']);
-      }
-      $pieChart = new PieChart();
-      $pieChart->getOptions()->setTitle('Prix des livres acheter par categorie');
-      $pieChart->getOptions()->setHeight(500);
-      $pieChart->getOptions()->setWidth(600);
-      $pieChart->getOptions()->setBackgroundColor('transparent');
-      $pieChart->getData()->setArrayToDataTable($data);
+        //chart pie buy price categorie
+        $data = [['Category','Prix']];
+        foreach ($buyPrices as $buyPrice) {
+            $data[] = array($buyPrice['category'],$buyPrice['buyP']*$buyPrice['stock']);
+        }
+        $pieChart = new PieChart();
+        $pieChart->getOptions()->setTitle('Prix des livres acheter par categorie');
+        $pieChart->getOptions()->setHeight(500);
+        $pieChart->getOptions()->setWidth(600);
+        $pieChart->getOptions()->setBackgroundColor('transparent');
+        $pieChart->getData()->setArrayToDataTable($data);
 
 
 
-      //pie chart rent by categorie
-      $dataRent = [['Category','location']];
-      foreach ($rentPrices as $rentPrice) {
-        $dataRent[] = array($rentPrice['category'],(int)$rentPrice['rentL']);
-      }
-      $pieRentChart = new PieChart();
-      $pieRentChart->getOptions()->setTitle('Livres louer par categorie');
-      $pieRentChart->getOptions()->setHeight(500);
-      $pieRentChart->getOptions()->setWidth(600);
-      $pieRentChart->getOptions()->setBackgroundColor('transparent');
-      $pieRentChart->getData()->setArrayToDataTable($dataRent);
+        //pie chart rent by categorie
+        $dataRent = [['Category','location']];
+        foreach ($rentPrices as $rentPrice) {
+            $dataRent[] = array($rentPrice['category'],(int)$rentPrice['rentL']);
+        }
+        $pieRentChart = new PieChart();
+        $pieRentChart->getOptions()->setTitle('Livres louer par categorie');
+        $pieRentChart->getOptions()->setHeight(500);
+        $pieRentChart->getOptions()->setWidth(600);
+        $pieRentChart->getOptions()->setBackgroundColor('transparent');
+        $pieRentChart->getData()->setArrayToDataTable($dataRent);
 
 
-      //bar chart sold by categorie
-      $dataBar = [['Category','Prix']];
-      foreach ($soldPrices as $soldPrice) {
-        $dataBar[] = array($soldPrice['category'],$soldPrice['soldP']*$soldPrice['sold']);
-      }
-      $barChart = new BarChart();
-      $barChart->getOptions()->setTitle('Prix des livres vendus par categorie');
-      $barChart->getOptions()->setHeight(500);
-      $barChart->getOptions()->setWidth(800);
-      $barChart->getOptions()->setBackgroundColor('transparent');
-      $barChart->getData()->setArrayToDataTable($dataBar);
+        //bar chart sold by categorie
+        $dataBar = [['Category','Prix']];
+        foreach ($soldPrices as $soldPrice) {
+            $dataBar[] = array($soldPrice['category'],$soldPrice['soldP']*$soldPrice['sold']);
+        }
+        $barChart = new BarChart();
+        $barChart->getOptions()->setTitle('Prix des livres vendus par categorie');
+        $barChart->getOptions()->setHeight(500);
+        $barChart->getOptions()->setWidth(800);
+        $barChart->getOptions()->setBackgroundColor('transparent');
+        $barChart->getData()->setArrayToDataTable($dataBar);
 
 
-        return $this->render('admin/dashboard.html.twig',array('piechart' => $pieChart,'barchart'=>$barChart,'pierentchart'=>$pieRentChart));
+        return $this->render('admin/dashboard.html.twig', array('piechart' => $pieChart,'barchart'=>$barChart,'pierentchart'=>$pieRentChart));
     }
 
 
@@ -108,9 +105,9 @@ class DashboardController extends AbstractDashboardController
      */
     public function books()
     {
-      $repo = $this->getDoctrine()->getRepository(Book::class);
-      $books = $repo->findAll();
-      return $this->render('booksList/books.html.twig', [
+        $repo = $this->getDoctrine()->getRepository(Book::class);
+        $books = $repo->findAll();
+        return $this->render('booksList/books.html.twig', [
           'books' => $books
       ]);
     }
@@ -123,10 +120,5 @@ class DashboardController extends AbstractDashboardController
         $repo = $this->getDoctrine()->getRepository(Book::class);
         $book = $repo->find($id);
         return $this->render('booksList/book.html.twig', ['book' => $book]);
-        }
-
-
-
-
-
+    }
 }

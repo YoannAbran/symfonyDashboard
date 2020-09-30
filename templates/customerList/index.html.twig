@@ -10,9 +10,12 @@
 
   <td scope='col'>Titre du livre</td>
   <td scope='col'>Categorie</td>
+  <td scope='col'>Prix achat</td>
   <td scope='col'>Date achat</td>
+  <td scope='col'>Prix Location</td>
   <td scope='col'>Date location</td>
   <td scope='col'>Date de retour</td>
+
 
 </thead>
 
@@ -27,13 +30,18 @@
 <td> {{ customerFlow.book.category}}</td>
 
 
+
 {% if customerFlow.flow.rentDate == NULL %}
+<td>{{ customerFlow.book.buyPrice}} €</td>
 <td>{{ customerFlow.flow.buyDate|date('Y-m-d')}}</td>
+<td></td>
 <td></td>
 <td></td>
 
 {% else %}
 <td></td>
+<td></td>
+<td>{{ customerFlow.book.rentPrice}} €</td>
 <td>{{ customerFlow.flow.rentDate|date('Y-m-d')}}</td>
 <td>{{ customerFlow.flow.returnDate|date('Y-m-d')}}</td></tr>
 {% endif %}
