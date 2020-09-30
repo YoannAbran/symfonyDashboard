@@ -4,47 +4,22 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\Session;
 use App\Repository\BookRepository;
+use App\Service\Cart\CartService;
 use Symfony\Component\Routing\Annotation\Route;
-
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class CartController extends AbstractController
 {
     /**
      * @Route("/panier", name="cart_index")
      */
-    public function index(Session $session, BookRepository $bookRepository)
+    public function index(CartService $cartService)
     {
-        $panier = $session->get('panier', []);
+        $panierWithData = $cartService->getFullCart();
 
-        $panierWithData = [];
+        $total = $cartService->getTotal();
 
-        foreach($panier as $id => $quantity){
-          $panierWithData[] = [
-            'book' => $bookRepository->find($id),
-            'quantity' => $quantity
-          ];
-        }
-
-    $total = 0;
-
-  if  (isset($_GET['action'])) {
-    if ($_GET['action'] == 'achat') {
-      foreach ($panierWithData as $item) {
-        $totalItem = $item['book']->getSoldPrice() * $item['quantity'];
-        $total += $totalItem;
-      }
-    }
-
-  else if ($_GET['action'] == 'location') {
-      foreach ($panierWithData as $item) {
-        $totalItem = $item['book']->getRentPrice() * $item['quantity'];
-        $total += $totalItem;
-        }
-      }
-
-      }
       return $this->render('cart/index.html.twig', [
       'panierWithData' => $panierWithData,
       'total' => $total]);
@@ -54,17 +29,9 @@ class CartController extends AbstractController
     /**
      * @Route("/panier/ad/{id}", name="cart_add")
      */
-    public function add($id, Session $session){
+    public function add($id, CartService $cartService){
 
-      $panier =  $session->get('panier', []);
-
-      if(!empty($panier[$id])){
-        $panier[$id]++;
-      } else {
-        $panier[$id] = 1;
-      }
-
-      $session->set('panier', $panier);
+      $cartService->add($id);
 
       return $this->redirectToRoute("cart_index");
     }
@@ -72,7 +39,7 @@ class CartController extends AbstractController
     /**
      * @Route("/panier/remove/{id}", name="cart_remove")
      */
-    public function remove($id, Session $session ){
+    public function remove($id, SessionInterface $session ){
       $panier = $session->get ('panier', []);
 
       if(!empty($panier[$id])){
@@ -87,7 +54,7 @@ class CartController extends AbstractController
     /**
      * @Route("/panier/removeAll", name="removeAll")
      */
-    public function removeAll(Session $session ){
+    public function removeAll(SessionInterface $session ){
       $panier = $session->get ('panier', []);
 
 
