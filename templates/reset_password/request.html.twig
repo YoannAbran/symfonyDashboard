@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}BOOKING | Réinitialisation du mot de passe{% endblock %}
+
+{% block body %}
+    {% for flashError in app.flashes('reset_password_error') %}
+        <div class="alert alert-danger" role="alert">{{ flashError }}</div>
+    {% endfor %}
+    <h1 class="my-3">Réinitialisation du mot de passe</h1>
+
+    {{ form_start(requestForm) }}
+        {{ form_row(requestForm.email) }}
+        <div class="my-3">
+            <small>
+                Indiquez votre adresse email pour recevoir un lien vous permettant de réinitialiser votre mot de passe.
+            </small>
+        </div>
+
+        <button class="btn btn-primary mt-1">M'envoyer le mail de réinitialisation du mot de passe</button>
+    {{ form_end(requestForm) }}
+{% endblock %}
