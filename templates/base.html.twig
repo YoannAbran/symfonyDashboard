@@ -40,7 +40,6 @@
                         </li>
                     {% else %}
                         {% if is_granted('ROLE_ADMIN') %}
-<<<<<<< HEAD
                             <li class="nav-item mx-3">
                                 <a class="nav-link" href="{{ path('admin') }}">Administration</a>
                             </li>
@@ -51,10 +50,6 @@
                             </li>
                             <li class="nav-item mx-3">
                                 <a class="nav-link" href="{{ path('customerList') }}">Mon compte</a>
-=======
-                            <li class="nav-item mx-5">
-                                <a class="nav-link" href="{{ path('admin') }}"><i class="fas fa-tools"></i> Administration</a>
->>>>>>> 66b424274996366df202d0931cf1c5765c549e26
                             </li>
                         {% endif %}
                         <li class="nav-item mx-5">
