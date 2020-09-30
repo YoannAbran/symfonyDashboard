@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}BOOKING -
+{% block title %}BOOKING |
   {{ book.getTitle }}
 {% endblock %}
 
@@ -30,7 +30,7 @@
           <p>{{ book.getDescription | raw }}
             <p>
 
-              {% if app.user and book.getStock > 1 %}
+              {% if app.user and book.getStock > 0 %}
                 <a href="{{ path('cart_add', {'id': book.getId,}) }}" class="btn btn-primary my-5">Acheter ce livre pour
                   {{ book.getSoldPrice }}
                   €</a>
