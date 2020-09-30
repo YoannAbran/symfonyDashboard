@@ -16,8 +16,8 @@
         {{ form_row(registrationForm.plainPassword) }}
 
         <div class="row">
-            {{ form_row(registrationForm.agreeTerms, {'label': "J'accepte les"} ) }}
-            <a id="FooterSpy" href="#staticBackdrop" data-toggle="modal" class="modal-trigger">&nbsp; conditions d'utilisation</a>
+            {{ form_row(registrationForm.agreeTerms, {'label': "J'accepte les"} ) }}<span>&nbsp;</span>
+            <a id="FooterSpy" href="#staticBackdrop" data-toggle="modal" class="modal-trigger">conditions d'utilisation</a><span>&nbsp;sans réserve </span>
         </div>
 
         <button type="submit" class="btn btn-lg btn-primary mt-3">S'enregistrer</button>
@@ -34,7 +34,7 @@
             </button>
           </div>
           <div class="modal-body">
-            <p>BOOKING  à raison et peut faire ce qu'il veut avec vos données !<br>
+            <p>BOOKING à raison et peut faire ce qu'il veut avec vos données !<br>
             Vous n'avez le droit à rien et nous faison ce qui nous plait !<br>
             Si cela ne vous plait pas, tant pis, allez voir ailleur si vous y êtes.<br>
             <br>
@@ -43,7 +43,7 @@
             L'équipe BOOKING</p>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal">J'ai compris</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal">J'ai compris !</button>
           </div>
         </div>
       </div>
