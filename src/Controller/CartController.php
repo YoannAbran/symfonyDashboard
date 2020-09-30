@@ -4,24 +4,18 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 use App\Repository\BookRepository;
-use App\Service\Cart\CartService;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
+
 
 class CartController extends AbstractController
 {
     /**
      * @Route("/panier", name="cart_index")
      */
-    public function index(CartService $cartService)
+    public function index(Session $session, BookRepository $bookRepository)
     {
-<<<<<<< HEAD
-        $panierWithData = $cartService->getFullCart();
-
-        $total = $cartService->getTotal();
-
-=======
       $panierRent = $session->get('panierRent', []);
       $panier = $session->get('panier', []);
 
@@ -55,7 +49,6 @@ class CartController extends AbstractController
         }
 
 
->>>>>>> 44b1bd80f4799a8c442eb57ac5cb0fdcd8982fb5
       return $this->render('cart/index.html.twig', [
       'panierAchat' => $panierAchat,
       'panierLocation' => $panierLocation,
@@ -66,9 +59,17 @@ class CartController extends AbstractController
     /**
      * @Route("/panier/ad/{id}", name="cart_add")
      */
-    public function add($id, CartService $cartService){
+    public function add($id, Session $session){
 
-      $cartService->add($id);
+      $panier =  $session->get('panier', []);
+
+      if(!empty($panier[$id])){
+        $panier[$id]++;
+      } else {
+        $panier[$id] = 1;
+      }
+
+      $session->set('panier', $panier);
 
       return $this->redirectToRoute("cart_index");
     }
@@ -94,7 +95,7 @@ class CartController extends AbstractController
     /**
      * @Route("/panier/remove/{id}", name="cart_remove")
      */
-    public function remove($id, SessionInterface $session ){
+    public function remove($id, Session $session ){
       $panier = $session->get ('panier', []);
 
       if(!empty($panier[$id])){
@@ -125,12 +126,7 @@ class CartController extends AbstractController
     /**
      * @Route("/panier/removeAll", name="removeAll")
      */
-<<<<<<< HEAD
-    public function removeAll(SessionInterface $session ){
-      $panier = $session->get ('panier', []);
-=======
     public function removeAll(Session $session ){
->>>>>>> 44b1bd80f4799a8c442eb57ac5cb0fdcd8982fb5
 
       $panier = $session->get ('panier', []);
       $panierRent = $session->get ('panierRent', []);
