@@ -16,12 +16,49 @@ class CartController extends AbstractController
      */
     public function index(CartService $cartService)
     {
+<<<<<<< HEAD
         $panierWithData = $cartService->getFullCart();
 
         $total = $cartService->getTotal();
 
+=======
+      $panierRent = $session->get('panierRent', []);
+      $panier = $session->get('panier', []);
+
+        $panierAchat = [];
+        $panierLocation = [];
+
+        foreach($panier as $id => $quantity){
+          $panierAchat[] = [
+            'book' => $bookRepository->find($id),
+            'quantity' => $quantity
+          ];
+        }
+
+        foreach($panierRent as $id => $quantity){
+          $panierLocation[] = [
+            'book' => $bookRepository->find($id),
+            'quantity' => $quantity
+          ];
+        }
+
+    $total = 0;
+
+      foreach ($panierAchat as $item) {
+        $totalItem = $item['book']->getSoldPrice() * $item['quantity'];
+        $total += $totalItem;
+      }
+
+      foreach ($panierLocation as $item) {
+        $totalItem = $item['book']->getRentPrice() * $item['quantity'];
+        $total += $totalItem;
+        }
+
+
+>>>>>>> 44b1bd80f4799a8c442eb57ac5cb0fdcd8982fb5
       return $this->render('cart/index.html.twig', [
-      'panierWithData' => $panierWithData,
+      'panierAchat' => $panierAchat,
+      'panierLocation' => $panierLocation,
       'total' => $total]);
     }
 
@@ -32,6 +69,24 @@ class CartController extends AbstractController
     public function add($id, CartService $cartService){
 
       $cartService->add($id);
+
+      return $this->redirectToRoute("cart_index");
+    }
+
+    /**
+     * @Route("/panier/rent/{id}", name="cart_rent")
+     */
+    public function rent($id, Session $session){
+
+      $panierRent =  $session->get('panierRent', []);
+
+      if(!empty($panierRent[$id])){
+        $panierRent[$id]++;
+      } else {
+        $panierRent[$id] = 1;
+      }
+
+      $session->set('panierRent', $panierRent);
 
       return $this->redirectToRoute("cart_index");
     }
@@ -52,17 +107,38 @@ class CartController extends AbstractController
     }
 
     /**
+     * @Route("/panier/removeRent/{id}", name="cart_removeRent")
+     */
+    public function removeRent($id, Session $session ){
+
+      $panierRent = $session->get ('panierRent', []);
+
+      if(!empty($panierRent[$id])){
+        unset($panierRent[$id]);
+      }
+
+      $session->set('panierRent', $panierRent);
+
+      return $this->redirectToRoute("cart_index");
+    }
+
+    /**
      * @Route("/panier/removeAll", name="removeAll")
      */
+<<<<<<< HEAD
     public function removeAll(SessionInterface $session ){
       $panier = $session->get ('panier', []);
+=======
+    public function removeAll(Session $session ){
+>>>>>>> 44b1bd80f4799a8c442eb57ac5cb0fdcd8982fb5
 
+      $panier = $session->get ('panier', []);
+      $panierRent = $session->get ('panierRent', []);
 
         unset($panier);
-
+        unset($panierRent);
       $session->set('panier', []);
-
-
+      $session->set('panierRent', []);
 
       return $this->redirectToRoute("cart_index");
     }

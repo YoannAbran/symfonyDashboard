@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-
 use App\Entity\Book;
 use App\Entity\User;
 use App\Entity\CustomerFlow;
@@ -17,18 +16,17 @@ class CustomerListController extends AbstractController
      */
     public function getCustomerList()
     {
-      $em = $this->getDoctrine()->getManager();
-      $user = $this->getUser();
-      $user->getUserName();
-      $getUser = $em->getRepository(User::class)
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+        $user->getUserName();
+        $getUser = $em->getRepository(User::class)
                  ->find($user);
-      $userId = $getUser->getId();
-      $customerFlows =$em->getRepository(CustomerFlow::class)
+        $userId = $getUser->getId();
+        $customerFlows =$em->getRepository(CustomerFlow::class)
                  ->findBy(['user'=>$userId]);
         // $customerFlow=array();
 
 
-              return $this->render('customerList/index.html.twig',['customerFlows'=>$customerFlows]);
-
+        return $this->render('customerList/index.html.twig', ['customerFlows'=>$customerFlows]);
     }
 }

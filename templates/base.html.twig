@@ -21,23 +21,22 @@
     <body>
 
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-            <a class="navbar-brand" href="{{ path('home') }}">Accueil</a>
+            <a class="navbar-brand mx-5" href="{{ path('home') }}">Accueil</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
 
-            <div class="collapse navbar-collapse" id="navbarColor01">
+            <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarColor01">
                 <ul class="navbar-nav mx-5">
-                    <li class="nav-item mx-3">
-                        <a class="nav-link" href="{{ path('books') }}">Nos Livres</a>
+                    <li class="nav-item mx-5">
+                        <a class="nav-link" href="{{ path('books') }}"><i class="fas fa-book"></i> Nos Livres</a>
                     </li>
-
                     {% if not app.user %}
-                        <li class="nav-item mx-3">
-                            <a class="nav-link" href="{{ path('app_login') }}">Se connecter</a>
+                        <li class="nav-item mx-5">
+                            <a class="nav-link" href="{{ path('app_login') }}"><i class="fas fa-sign-in-alt"></i> Se connecter</a>
                         </li>
-                        <li class="nav-item mx-3">
-                            <a class="nav-link" href="{{ path('app_register') }}">S'enregistrer</a>
+                        <li class="nav-item mx-5">
+                            <a class="nav-link" href="{{ path('app_register') }}"><i class="fas fa-user-plus"></i> S'enregistrer</a>
                         </li>
                     {% else %}
                         {% if is_granted('ROLE_ADMIN') %}
@@ -46,14 +45,21 @@
                             </li>
                           {% elseif is_granted('ROLE_USER') %}
                             <li class="nav-item mx-3">
-                                <a class="nav-link" href="{{ path('cart_index') }}">Mon panier</a>
+                                <a class="nav-link" href="{{ path('cart_index') }}">Mon panier<span class=" p-1 ml-1 text-light rounded-circle bg-info text-left">{{ app.session.get('panier') | length + app.session.get('panierRent') | length }}</span></a>
+
                             </li>
                             <li class="nav-item mx-3">
                                 <a class="nav-link" href="{{ path('customerList') }}">Mon compte</a>
                             </li>
                         {% endif %}
-                        <li class="nav-item mx-3">
-                            <a class="nav-link" href="{{ path('app_logout') }}">Se déconnecter</a>
+                        <li class="nav-item mx-5">
+                            <a class="nav-link" href="{{ path('cart_index') }}"><i class="fas fa-shopping-basket"></i> Mon panier</a>
+                        </li>
+                        <li class="nav-item mx-5">
+                            <a class="nav-link" href="{{ path('customerList') }}"><i class="fas fa-user-alt"></i> Mon compte</a>
+                        </li>
+                        <li class="nav-item mx-5">
+                            <a class="nav-link" href="{{ path('app_logout') }}"><i class="fas fa-sign-out-alt"></i> Se déconnecter</a>
                         </li>
                     {% endif %}
 
