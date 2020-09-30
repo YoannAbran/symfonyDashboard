@@ -44,7 +44,7 @@ class RegistrationFormType extends AbstractType
                     ]
                 ],
                 'second_options' => [
-                    'label' => 'Confirmation du mot de passe',
+                    'label' => 'Confirmer votre mot de passe',
                     'attr' => [
                         'placeholder' => "Recopier ici votre mot de passe",
 
