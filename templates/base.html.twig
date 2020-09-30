@@ -40,8 +40,16 @@
                         </li>
                     {% else %}
                         {% if is_granted('ROLE_ADMIN') %}
-                            <li class="nav-item mx-5">
-                                <a class="nav-link" href="{{ path('admin') }}"><i class="fas fa-tools"></i> Administration</a>
+                            <li class="nav-item mx-3">
+                                <a class="nav-link" href="{{ path('admin') }}">Administration</a>
+                            </li>
+                          {% elseif is_granted('ROLE_USER') %}
+                            <li class="nav-item mx-3">
+                                <a class="nav-link" href="{{ path('cart_index') }}">Mon panier<span class=" p-1 ml-1 text-light rounded-circle bg-info text-left">{{ app.session.get('panier') | length + app.session.get('panierRent') | length }}</span></a>
+
+                            </li>
+                            <li class="nav-item mx-3">
+                                <a class="nav-link" href="{{ path('customerList') }}">Mon compte</a>
                             </li>
                         {% endif %}
                         <li class="nav-item mx-5">

@@ -6,43 +6,66 @@
 
   <h1 class="my-3">Votre panier</h1>
 
-  {% if panierWithData | length > 0 %}
-  <table class="table">
-    <tbody>
-      <thead>
-        <tr  class="text-center">
-          <th scope="col">Titre</th>
-          <th scope="col">Prix</th>
-          <th scope="col">Quantité</th>
-          <th scope="col">Total</th>
-          <th scope="col"></th>
-        </tr>
-      </thead>
+  {% if panierAchat | length > 0 or panierLocation | length > 0 %}
+    <table class="table">
+      <tbody>
+        <thead>
+          <tr class="text-center">
+            <th scope="col">Titre</th>
+            <th scope="col">Prix achat</th>
+            <th scope="col">Prix location
+            </th>
+            <th scope="col">Quantité</th>
+            <th scope="col">Total</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
 
-      {% for item in panierWithData %}
-        <tr>
+        {% for item in panierAchat %}
+          <tr>
             <td class="text-left col-8"><img class="img-fluid col-2" src="img/photo/{{ item.book.photo }}">{{ item.book.title }}</td>
-            <td class="text-center col-1 align-middle">{{ item.book.soldPrice }} €</td>
+            <td class="text-center col-1 align-middle">{{ item.book.soldPrice }}
+              €</td>
+            <td class="text-center col-1 align-middle"></td>
             <td class="text-center col-1 align-middle">{{ item.quantity }}</td>
-            <td class="text-center col-1 align-middle">{{ item.book.soldPrice * item.quantity }} €</td>
+            <td class="text-center col-1 align-middle">{{ item.book.soldPrice * item.quantity }}
+              €</td>
             <td class="align-middle">
               <a href="{{ path('cart_remove', {'id': item.book.id}) }}" class="btn btn-danger">
                 <i class="fas fa-trash"></i>
               </a>
             </td>
+          </tr>
+        {% endfor %}
+        {% for item in panierLocation %}
+          <tr>
+            <td class="text-left col-8"><img class="img-fluid col-2" src="img/photo/{{ item.book.photo }}">{{ item.book.title }}</td>
+            <td class="text-center col-1 align-middle"></td>
+            <td class="text-center col-1 align-middle">{{ item.book.rentPrice }}
+              €</td>
+            <td class="text-center col-1 align-middle">{{ item.quantity }}</td>
+            <td class="text-center col-1 align-middle">{{ item.book.rentPrice * item.quantity }}
+              €</td>
+            <td class="align-middle">
+              <a href="{{ path('cart_removeRent', {'id': item.book.id}) }}" class="btn btn-danger">
+                <i class="fas fa-trash"></i>
+              </a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="3" class="text-right">Total :</td>
+          <td class="text-center col-2 align-middle">{{ total }}
+            €</td>
+          <td></td>
         </tr>
-      {% endfor %}
-    </tbody>
-    <tfoot>
-      <tr>
-        <td colspan="3" class="text-right">Total :</td>
-        <td class="text-center col-2 align-middle">{{ total }} €</td>
-        <td></td>
-      </tr>
-    </tfoot>
-  </table>
+      </tfoot>
+    </table>
+    <a href="{{ path('bookBuy')}}" class="btn btn-danger ">Validation</a>
   {% else %}
     <p>C'est vide !</p>
   {% endif %}
-<a href="{{ path('bookBuy',{'data':panierWithData}) }}" class="btn btn-primary">
+
 {% endblock %}
