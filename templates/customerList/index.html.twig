@@ -3,49 +3,44 @@
 {% block title %}BOOKING | Mon compte{% endblock %}
 
 {% block body %}
-<table class="table">
-
-<thead>
-
-
-  <td scope='col'>Titre du livre</td>
-  <td scope='col'>Categorie</td>
-  <td scope='col'>Prix achat</td>
-  <td scope='col'>Date achat</td>
-  <td scope='col'>Prix Location</td>
-  <td scope='col'>Date location</td>
-  <td scope='col'>Date de retour</td>
+    <section>
+        <h1 class="my-3">Mon compte</h1>
+        <div class="d-flex justify-content-center">
+            <a href="{{ path('app_forgot_password_request') }}" class="btn btn-primary mx-3">Modifier mon mot de passe</a>
+            <a href="{{ path('home') }}" class="btn btn-primary mx-3">Modifier mon adresse mail ({{ app.user.email }})</a></p>
+        </div>
+    </section>
 
 
-</thead>
+    <table class="table my-5">
+        <thead class="bg-dark text-light text-center">
+            <td scope='col'>Titre du livre</td>
+            <td scope='col'>Categorie</td>
+            <td scope='col'>Prix achat</td>
+            <td scope='col'>Date achat</td>
+            <td scope='col'>Prix Location</td>
+            <td scope='col'>Date location</td>
+            <td scope='col'>Date de retour</td>
+        </thead>
 
-
-{% for customerFlow in customerFlows %}
-
-<tr>
-
-
-
-<td>{{ customerFlow.book.title }}</td>
-<td> {{ customerFlow.book.category}}</td>
-
-
-
-{% if customerFlow.flow.rentDate == NULL %}
-<td>{{ customerFlow.book.soldPrice}} €</td>
-<td>{{ customerFlow.flow.buyDate|date('Y-m-d')}}</td>
-<td></td>
-<td></td>
-<td></td>
-
-{% else %}
-<td></td>
-<td></td>
-<td>{{ customerFlow.book.rentPrice}} €</td>
-<td>{{ customerFlow.flow.rentDate|date('Y-m-d')}}</td>
-<td>{{ customerFlow.flow.returnDate|date('Y-m-d')}}</td></tr>
-{% endif %}
-{% endfor %}
-
-</table>
+        {% for customerFlow in customerFlows %}
+            <tr>
+                <td class="text-left">{{ customerFlow.book.title }}</td>
+                <td class="text-center">{{ customerFlow.book.category}}</td>
+                {% if customerFlow.flow.rentDate == NULL %}
+                    <td class="text-right">{{ customerFlow.book.soldPrice}} €</td>
+                    <td class="text-center">{{ customerFlow.flow.buyDate|date('d/m/Y')}}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                {% else %}
+                    <td></td>
+                    <td></td>
+                    <td class="text-right">{{ customerFlow.book.rentPrice}} €</td>
+                    <td class="text-center">{{ customerFlow.flow.rentDate|date('d/m/Y')}}</td>
+                    <td class="text-center">{{ customerFlow.flow.returnDate|date('d/m/Y')}}</td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+    </table>
 {% endblock %}
