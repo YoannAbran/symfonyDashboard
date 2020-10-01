@@ -75,6 +75,8 @@ class CartController extends AbstractController
         }
       } else {
         $panier[$id] = 1;
+        $bookRepository->find($id)->setStock($stock-1);
+        $em->flush();
       }
 
 
@@ -106,6 +108,8 @@ class CartController extends AbstractController
         }
       } else {
         $panierRent[$id] = 1;
+        $bookRepository->find($id)->setStock($stock-1);
+        $em->flush();
       }
 
 
@@ -176,12 +180,29 @@ class CartController extends AbstractController
     /**
      * @Route("/panier/remove/{id}", name="cart_remove")
      */
-    public function remove($id, Session $session ){
+    public function remove($id, Session $session,BookRepository $bookRepository ){
+
+      $em = $this->getDoctrine()->getManager();
+
       $panier = $session->get ('panier', []);
+
+      foreach($panier as $id => $quantity){
+        $panierAchat[] = [
+          'book' => $bookRepository->find($id),
+          'quantity' => $quantity
+        ];
+      }
+
+      $stock = $bookRepository->find($id)->getStock();
 
       if(!empty($panier[$id])){
         unset($panier[$id]);
+        $bookRepository->find($id)->setStock($stock+$quantity);
+          $em->flush();
       }
+
+
+
 
       $session->set('panier', $panier);
 
@@ -191,12 +212,24 @@ class CartController extends AbstractController
     /**
      * @Route("/panier/removeRent/{id}", name="cart_removeRent")
      */
-    public function removeRent($id, Session $session ){
+    public function removeRent($id, Session $session ,BookRepository $bookRepository){
 
+      $em = $this->getDoctrine()->getManager();
       $panierRent = $session->get ('panierRent', []);
+
+      foreach($panierRent as $id => $quantityRent){
+        $panierLocation[] = [
+          'book' => $bookRepository->find($id),
+          'quantityRent' => $quantityRent
+        ];
+      }
+      
+      $stock = $bookRepository->find($id)->getStock();
 
       if(!empty($panierRent[$id])){
         unset($panierRent[$id]);
+        $bookRepository->find($id)->setStock($stock+$quantityRent);
+          $em->flush();
       }
 
       $session->set('panierRent', $panierRent);
