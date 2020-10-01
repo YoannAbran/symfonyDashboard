@@ -27,14 +27,15 @@
             <td class="text-center col-1 align-middle">{{ item.book.soldPrice }}
               €</td>
             <td class="text-center col-1 align-middle"></td>
-            <td class="text-center col-1 align-middle">{{ item.quantity }}
-              <a href="{{ path('cart_add', {'id' : item.book.id}) }}" class="btn btn-primary">+<a>
-                <a href="{{ path('add_remove', {'id' : item.book.id}) }}" class="btn btn-primary">-<a>
-              </td>
+            <td class="text-center col-1 align-middle">
+              <a href="{{ path('add_remove', {'id' : item.book.id}) }}" class="btn btn-link text-primary" title="Retirer"><i class="fas fa-minus"></i><a>
+              <span class="mx-1">{{ item.quantity }}</span>
+              <a href="{{ path('cart_add', {'id' : item.book.id}) }}" class="btn btn-link text-primary"title="Ajouter"><i class="fas fa-plus"></i><a>
+            </td>
             <td class="text-center col-1 align-middle">{{ item.book.soldPrice * item.quantity }}
               €</td>
             <td class="align-middle">
-              <a href="{{ path('cart_remove', {'id': item.book.id}) }}" class="btn btn-danger">
+              <a href="{{ path('cart_remove', {'id': item.book.id}) }}" class="btn btn-link text-danger" title="Supprimer">
                 <i class="fas fa-trash"></i>
               </a>
             </td>
@@ -46,14 +47,15 @@
             <td class="text-center col-1 align-middle"></td>
             <td class="text-center col-1 align-middle">{{ item.book.rentPrice }}
               €</td>
-            <td class="text-center col-1 align-middle">{{ item.quantityRent }}
-              <a href="{{ path('cart_rent', {'id' : item.book.id}) }}" class="btn btn-primary">+<a>
-              <a href="{{ path('rent_remove', {'id' : item.book.id}) }}" class="btn btn-primary">-<a>
+            <td class="text-center col-1 align-middle">
+              <a href="{{ path('rent_remove', {'id' : item.book.id}) }}" class="btn btn-link text-primary" title="Retirer"><i class="fas fa-minus"></i><a>
+              <span class="mx-1">{{ item.quantityRent }}</span>
+              <a href="{{ path('cart_rent', {'id' : item.book.id}) }}" class="btn btn-link text-primary" title="Ajouter"><i class="fas fa-plus"></i><a>
             </td>
             <td class="text-center col-1 align-middle">{{ item.book.rentPrice * item.quantityRent }}
               €</td>
             <td class="align-middle">
-              <a href="{{ path('cart_removeRent', {'id': item.book.id}) }}" class="btn btn-danger">
+              <a href="{{ path('cart_removeRent', {'id': item.book.id}) }}" class="btn btn-link text-danger" title="Supprimer">
                 <i class="fas fa-trash"></i>
               </a>
             </td>
@@ -69,7 +71,10 @@
         </tr>
       </tfoot>
     </table>
-    <a href="{{ path('bookBuy')}}" class="btn btn-danger ">Validation</a>
+    <div class="container-fluid d-flex my-5">
+          <a href="{{ path('bookBuy')}}" class="btn btn-primary m-auto" title="Fais chauffer la CB !">Validation</a>
+    </div>
+
 
   {% else %}
     <p>C'est vide !</p>
