@@ -50,23 +50,24 @@ class BookBuyController extends AbstractController
             $book->setStock($stock-$quantity);
             $book->setSold($sold+$quantity);
 
-for ($i=0; $i < $quantity; $i++) {
+            for ($i=0; $i < $quantity; $i++) {
 
             $date = new \DateTime('now');
             $flow = new Flow;
             $flow->setBook($book);
             $flow->setBuyDate($date);
             $em->persist($flow);
-            $em->flush();
+
 
             $customerFlow = new CustomerFlow;
             $customerFlow->setUser($user);
             $customerFlow->setBook($book);
             $customerFlow->setFlow($flow);
-            $em->persist($customerFlow);
+            $em->merge($customerFlow);
+
+            }
             $em->flush();
             $em->clear();
-            }
         }
 
         $panierRent = $session->get('panierRent', []);
@@ -79,6 +80,7 @@ for ($i=0; $i < $quantity; $i++) {
         }
 
         foreach ($panierLocation as $item) {
+
             $user = $this->getUser();
 
             $stock = $item['book']->getStock();
@@ -91,21 +93,25 @@ for ($i=0; $i < $quantity; $i++) {
             $book->setStock($stock-$quantityRent);
             $book->setRent($rent+$quantityRent);
 
+          for ($i=0; $i < $quantityRent; $i++) {
             $date = new \DateTime('now');
             $buyDate = new \DateTime('now');
             $returnDate = $date->add(new \DateInterval('P7D'));
+
             $flow = new Flow;
             $flow->setBook($book);
             $flow->setRentDate($buyDate);
             $flow->setReturnDate($returnDate);
             $em->persist($flow);
-            $em->flush();
+          
 
             $customerFlow = new CustomerFlow;
             $customerFlow->setUser($user);
             $customerFlow->setBook($book);
             $customerFlow->setFlow($flow);
-            $em->persist($customerFlow);
+            $em->merge($customerFlow);
+          }
+
             $em->flush();
             $em->clear();
         }
