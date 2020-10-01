@@ -29,10 +29,10 @@ class CartController extends AbstractController
           ];
         }
 
-        foreach($panierRent as $id => $quantity){
+        foreach($panierRent as $id => $quantityRent){
           $panierLocation[] = [
             'book' => $bookRepository->find($id),
-            'quantity' => $quantity
+            'quantityRent' => $quantityRent
           ];
         }
 
@@ -44,7 +44,7 @@ class CartController extends AbstractController
       }
 
       foreach ($panierLocation as $item) {
-        $totalItem = $item['book']->getRentPrice() * $item['quantity'];
+        $totalItem = $item['book']->getRentPrice() * $item['quantityRent'];
         $total += $totalItem;
         }
 

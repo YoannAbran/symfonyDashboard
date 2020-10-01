@@ -18,6 +18,21 @@
 
     </head>
 
+    {% set panier = app.session.get('panier') %}
+    {% set panierRent = app.session.get('panierRent') %}
+
+{% set quantity = 0 %}
+
+{% set quantityRent = 0 %}
+
+    {% for key, item in panier %}
+    {% set quantity = quantity + item %}
+{% endfor %}
+
+    {% for key, item in panierRent %}
+    {% set quantityRent = quantityRent + item %}
+{% endfor %}
+
     <body>
 
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -29,7 +44,7 @@
             {% else %}
                 Visiteur(se)
             {% endif %}
-            ,</p>
+            </p>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
@@ -49,7 +64,7 @@
                         </li>
                     {% else %}
                         <li class="nav-item mx-5">
-                            <a class="nav-link" href="{{ path('cart_index') }}"><i class="fas fa-shopping-basket"></i> Mon panier<span class=" px-1 ml-1 text-light rounded-circle bg-info text-left">{{ app.session.get('panier') | length + app.session.get('panierRent') | length }}</span></a>
+                            <a class="nav-link" href="{{ path('cart_index') }}"><i class="fas fa-shopping-basket"></i> Mon panier<span class=" px-1 ml-1 text-light rounded-circle bg-info text-left">{{ quantity + quantityRent }}</span></a>
                         </li>
                         <li class="nav-item mx-5">
                             <a class="nav-link" href="{{ path('customerList') }}"><i class="fas fa-user-alt"></i> Mon compte</a>
