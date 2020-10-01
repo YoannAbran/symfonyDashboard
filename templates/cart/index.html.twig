@@ -27,7 +27,10 @@
             <td class="text-center col-1 align-middle">{{ item.book.soldPrice }}
               €</td>
             <td class="text-center col-1 align-middle"></td>
-            <td class="text-center col-1 align-middle">{{ item.quantity }}</td>
+            <td class="text-center col-1 align-middle">{{ item.quantity }}
+              <a href="{{ path('cart_add', {'id' : item.book.id}) }}" class="btn btn-primary">+<a>
+                <a href="{{ path('add_remove', {'id' : item.book.id}) }}" class="btn btn-primary">-<a>
+              </td>
             <td class="text-center col-1 align-middle">{{ item.book.soldPrice * item.quantity }}
               €</td>
             <td class="align-middle">
@@ -39,11 +42,14 @@
         {% endfor %}
         {% for item in panierLocation %}
           <tr>
-            <td class="text-left col-8"><img class="img-fluid col-2" src="img/photo/{{ item.book.photo }}">{{ item.book.title }}</td>
+            <td class="text-left col-2"><img class="img-fluid col-2" src="img/photo/{{ item.book.photo }}">{{ item.book.title }}</td>
             <td class="text-center col-1 align-middle"></td>
             <td class="text-center col-1 align-middle">{{ item.book.rentPrice }}
               €</td>
-            <td class="text-center col-1 align-middle">{{ item.quantityRent }}</td>
+            <td class="text-center col-1 align-middle">{{ item.quantityRent }}
+              <a href="{{ path('cart_rent', {'id' : item.book.id}) }}" class="btn btn-primary">+<a>
+              <a href="{{ path('rent_remove', {'id' : item.book.id}) }}" class="btn btn-primary">-<a>
+            </td>
             <td class="text-center col-1 align-middle">{{ item.book.rentPrice * item.quantityRent }}
               €</td>
             <td class="align-middle">
@@ -64,6 +70,7 @@
       </tfoot>
     </table>
     <a href="{{ path('bookBuy')}}" class="btn btn-danger ">Validation</a>
+
   {% else %}
     <p>C'est vide !</p>
   {% endif %}
