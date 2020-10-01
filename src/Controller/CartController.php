@@ -59,15 +59,23 @@ class CartController extends AbstractController
     /**
      * @Route("/panier/ad/{id}", name="cart_add")
      */
-    public function add($id, Session $session){
+    public function add($id, Session $session, BookRepository $bookRepository){
 
+      $em = $this->getDoctrine()->getManager();
       $panier =  $session->get('panier', []);
+
 
       if(!empty($panier[$id])){
         $panier[$id]++;
       } else {
         $panier[$id] = 1;
       }
+
+        $stock = $bookRepository->find($id)->getStock();
+
+        $bookRepository->find($id)->setStock($stock-1);
+        $em->flush();
+
 
       $session->set('panier', $panier);
 
@@ -77,8 +85,9 @@ class CartController extends AbstractController
     /**
      * @Route("/panier/rent/{id}", name="cart_rent")
      */
-    public function rent($id, Session $session){
+    public function rent($id, Session $session,BookRepository $bookRepository){
 
+      $em = $this->getDoctrine()->getManager();
       $panierRent =  $session->get('panierRent', []);
 
       if(!empty($panierRent[$id])){
@@ -87,6 +96,10 @@ class CartController extends AbstractController
         $panierRent[$id] = 1;
       }
 
+      $stock = $bookRepository->find($id)->getStock();
+
+      $bookRepository->find($id)->setStock($stock-1);
+      $em->flush();
       $session->set('panierRent', $panierRent);
 
       return $this->redirectToRoute("cart_index");
@@ -95,8 +108,9 @@ class CartController extends AbstractController
     /**
      * @Route("/panier/rentRemove/{id}", name="rent_remove")
      */
-    public function RentRemove($id, Session $session){
+    public function RentRemove($id, Session $session ,BookRepository $bookRepository){
 
+      $em = $this->getDoctrine()->getManager();
       $panierRent =  $session->get('panierRent', []);
 
       if(!empty($panierRent[$id])){
@@ -110,6 +124,10 @@ class CartController extends AbstractController
       unset($panierRent[$id]);
       }
 
+      $stock = $bookRepository->find($id)->getStock();
+
+      $bookRepository->find($id)->setStock($stock+1);
+      $em->flush();
       $session->set('panierRent', $panierRent);
 
       return $this->redirectToRoute("cart_index");
@@ -118,8 +136,9 @@ class CartController extends AbstractController
     /**
      * @Route("/panier/adRemove/{id}", name="add_remove")
      */
-    public function AddRemove($id, Session $session){
+    public function AddRemove($id, Session $session,BookRepository $bookRepository){
 
+      $em = $this->getDoctrine()->getManager();
       $panier =  $session->get('panier', []);
 
       if(!empty($panier[$id])){
@@ -133,6 +152,10 @@ class CartController extends AbstractController
       unset($panier[$id]);
       }
 
+      $stock = $bookRepository->find($id)->getStock();
+
+      $bookRepository->find($id)->setStock($stock+1);
+      $em->flush();
       $session->set('panier', $panier);
 
       return $this->redirectToRoute("cart_index");

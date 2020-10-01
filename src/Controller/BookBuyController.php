@@ -38,16 +38,18 @@ class BookBuyController extends AbstractController
 
         foreach ($panierAchat as $item) {
 
+
+            $quantity = $item['quantity'];
             $user = $this->getUser();
-            $stock = $item['book']->getStock();
+
+            // $stock = $item['book']->getStock();
+
             $sold = $item['book']->getSold();
             $id = $item['book']->getId();
             $book = $em->getRepository(Book::class)
                     ->find($id);
 
-            $quantity = $item['quantity'];
-
-            $book->setStock($stock-$quantity);
+            // $book->setStock($stock-$quantity);
             $book->setSold($sold+$quantity);
 
             for ($i=0; $i < $quantity; $i++) {
@@ -82,15 +84,16 @@ class BookBuyController extends AbstractController
         foreach ($panierLocation as $item) {
 
             $user = $this->getUser();
+            $quantityRent = $item['quantityRent'];
 
-            $stock = $item['book']->getStock();
+
+            // $stock = $item['book']->getStock();
             $rent = $item['book']->getRent();
             $id = $item['book']->getId();
             $book = $em->getRepository(Book::class)
                     ->find($id);
-            $quantityRent = $item['quantityRent'];
 
-            $book->setStock($stock-$quantityRent);
+            // $book->setStock($stock-$quantityRent);
             $book->setRent($rent+$quantityRent);
 
           for ($i=0; $i < $quantityRent; $i++) {
@@ -103,7 +106,7 @@ class BookBuyController extends AbstractController
             $flow->setRentDate($buyDate);
             $flow->setReturnDate($returnDate);
             $em->persist($flow);
-          
+
 
             $customerFlow = new CustomerFlow;
             $customerFlow->setUser($user);
