@@ -43,8 +43,8 @@
             <td class="text-center col-1 align-middle"></td>
             <td class="text-center col-1 align-middle">{{ item.book.rentPrice }}
               €</td>
-            <td class="text-center col-1 align-middle">{{ item.quantity }}</td>
-            <td class="text-center col-1 align-middle">{{ item.book.rentPrice * item.quantity }}
+            <td class="text-center col-1 align-middle">{{ item.quantityRent }}</td>
+            <td class="text-center col-1 align-middle">{{ item.book.rentPrice * item.quantityRent }}
               €</td>
             <td class="align-middle">
               <a href="{{ path('cart_removeRent', {'id': item.book.id}) }}" class="btn btn-danger">
