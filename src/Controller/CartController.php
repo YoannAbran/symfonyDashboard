@@ -63,18 +63,23 @@ class CartController extends AbstractController
 
       $em = $this->getDoctrine()->getManager();
       $panier =  $session->get('panier', []);
-
+      $stock = $bookRepository->find($id)->getStock();
 
       if(!empty($panier[$id])){
-        $panier[$id]++;
+        if ($stock > 0) {
+          $panier[$id]++;
+          $bookRepository->find($id)->setStock($stock-1);
+          $em->flush();
+        }
+        else {
+        }
       } else {
         $panier[$id] = 1;
       }
 
-        $stock = $bookRepository->find($id)->getStock();
 
-        $bookRepository->find($id)->setStock($stock-1);
-        $em->flush();
+
+
 
 
       $session->set('panier', $panier);
@@ -89,17 +94,23 @@ class CartController extends AbstractController
 
       $em = $this->getDoctrine()->getManager();
       $panierRent =  $session->get('panierRent', []);
+      $stock = $bookRepository->find($id)->getStock();
 
-      if(!empty($panierRent[$id])){
-        $panierRent[$id]++;
+      if(!empty($panierRent[$id] )){
+        if ($stock > 0) {
+          $panierRent[$id]++;
+          $bookRepository->find($id)->setStock($stock-1);
+          $em->flush();
+        }
+        else {
+        }
       } else {
         $panierRent[$id] = 1;
       }
 
-      $stock = $bookRepository->find($id)->getStock();
 
-      $bookRepository->find($id)->setStock($stock-1);
-      $em->flush();
+
+
       $session->set('panierRent', $panierRent);
 
       return $this->redirectToRoute("cart_index");
