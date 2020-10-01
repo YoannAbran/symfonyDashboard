@@ -28,9 +28,11 @@
               €</td>
             <td class="text-center col-1 align-middle"></td>
             <td class="text-center col-1 align-middle">
-              <a href="{{ path('add_remove', {'id' : item.book.id}) }}" class="btn btn-link text-primary" title="Retirer"><i class="fas fa-minus"></i><a>
-              <span class="mx-1">{{ item.quantity }}</span>
-              <a href="{{ path('cart_add', {'id' : item.book.id}) }}" class="btn btn-link text-primary"title="Ajouter"><i class="fas fa-plus"></i><a>
+            <div class="d-flex">
+              <a href="{{ path('add_remove', {'id' : item.book.id}) }}" class="btn btn-link text-primary align-bottom" title="Retirer"><i class="fas fa-minus"></i></a>
+              <span class="mx-1 mt-2 align-bottom">{{ item.quantity }}</span>
+              <a href="{{ path('cart_add', {'id' : item.book.id}) }}" class="btn btn-link text-primary"title="Ajouter"><i class="fas fa-plus"></i></a>
+                  </div>
             </td>
             <td class="text-center col-1 align-middle">{{ item.book.soldPrice * item.quantity }}
               €</td>
