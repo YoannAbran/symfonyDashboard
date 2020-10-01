@@ -23,11 +23,9 @@ class BookBuyController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
 
-        $panierRent = $session->get('panierRent', []);
         $panier = $session->get('panier', []);
 
         $panierAchat = [];
-        $panierLocation = [];
 
         foreach ($panier as $id => $quantity) {
             $panierAchat[] = [
@@ -36,40 +34,48 @@ class BookBuyController extends AbstractController
            ];
         }
 
-        foreach ($panierRent as $id => $quantity) {
-            $panierLocation[] = [
-             'book' => $bookRepository->find($id),
-             'quantity' => $quantity
-           ];
-        }
-
         $user = $this->getUser();
 
         foreach ($panierAchat as $item) {
+
             $user = $this->getUser();
             $stock = $item['book']->getStock();
             $sold = $item['book']->getSold();
             $id = $item['book']->getId();
             $book = $em->getRepository(Book::class)
                     ->find($id);
+
             $quantity = $item['quantity'];
 
             $book->setStock($stock-$quantity);
             $book->setSold($sold+$quantity);
+
+for ($i=0; $i < $quantity; $i++) {
 
             $date = new \DateTime('now');
             $flow = new Flow;
             $flow->setBook($book);
             $flow->setBuyDate($date);
             $em->persist($flow);
+            $em->flush();
 
             $customerFlow = new CustomerFlow;
             $customerFlow->setUser($user);
             $customerFlow->setBook($book);
             $customerFlow->setFlow($flow);
-            $em->merge($customerFlow);
+            $em->persist($customerFlow);
             $em->flush();
             $em->clear();
+            }
+        }
+
+        $panierRent = $session->get('panierRent', []);
+        $panierLocation = [];
+        foreach ($panierRent as $id => $quantityRent) {
+            $panierLocation[] = [
+             'book' => $bookRepository->find($id),
+             'quantityRent' => $quantityRent
+           ];
         }
 
         foreach ($panierLocation as $item) {
@@ -80,10 +86,10 @@ class BookBuyController extends AbstractController
             $id = $item['book']->getId();
             $book = $em->getRepository(Book::class)
                     ->find($id);
-            $quantity = $item['quantity'];
+            $quantityRent = $item['quantityRent'];
 
-            $book->setStock($stock-$quantity);
-            $book->setRent($rent+$quantity);
+            $book->setStock($stock-$quantityRent);
+            $book->setRent($rent+$quantityRent);
 
             $date = new \DateTime('now');
             $buyDate = new \DateTime('now');
@@ -93,12 +99,13 @@ class BookBuyController extends AbstractController
             $flow->setRentDate($buyDate);
             $flow->setReturnDate($returnDate);
             $em->persist($flow);
+            $em->flush();
 
             $customerFlow = new CustomerFlow;
             $customerFlow->setUser($user);
             $customerFlow->setBook($book);
             $customerFlow->setFlow($flow);
-            $em->merge($customerFlow);
+            $em->persist($customerFlow);
             $em->flush();
             $em->clear();
         }
