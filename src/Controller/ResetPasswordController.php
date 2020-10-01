@@ -162,7 +162,7 @@ class ResetPasswordController extends AbstractController
         $email = (new TemplatedEmail())
             ->from(new Address('contact@booking.com', 'BOOKING'))
             ->to($user->getEmail())
-            ->subject('Your password reset request')
+            ->subject('Votre demande de modification de mot de passe - Ne pas répondre')
             ->htmlTemplate('reset_password/email.html.twig')
             ->context([
                 'resetToken' => $resetToken,
