@@ -29,9 +29,15 @@
             <td class="text-center col-1 align-middle"></td>
             <td class="text-center col-1 align-middle">
             <div class="d-flex">
+
               <a href="{{ path('add_remove', {'id' : item.book.id}) }}" class="btn btn-link text-primary align-bottom" title="Retirer"><i class="fas fa-minus"></i></a>
+
               <span class="mx-1 mt-2 align-bottom">{{ item.quantity }}</span>
+                {% if item.book.getStock > 0 %}
               <a href="{{ path('cart_add', {'id' : item.book.id}) }}" class="btn btn-link text-primary"title="Ajouter"><i class="fas fa-plus"></i></a>
+              {% else %}
+                <span class="btn btn-link text-dark"title="Ajouter"><i class="fas fa-plus"></i></span>
+                {% endif %}
                   </div>
             </td>
             <td class="text-center col-1 align-middle">{{ item.book.soldPrice * item.quantity }}
@@ -52,7 +58,11 @@
             <td class="text-center col-1 align-middle">
               <a href="{{ path('rent_remove', {'id' : item.book.id}) }}" class="btn btn-link text-primary" title="Retirer"><i class="fas fa-minus"></i><a>
               <span class="mx-1">{{ item.quantityRent }}</span>
-              <a href="{{ path('cart_rent', {'id' : item.book.id}) }}" class="btn btn-link text-primary" title="Ajouter"><i class="fas fa-plus"></i><a>
+              {% if item.book.getStock > 0 %}
+            <a href="{{ path('cart_rent', {'id' : item.book.id}) }}" class="btn btn-link text-primary"title="Ajouter"><i class="fas fa-plus"></i></a>
+            {% else %}
+              <span class="btn btn-link text-dark"title="Ajouter"><i class="fas fa-plus"></i></span>
+              {% endif %}
             </td>
             <td class="text-center col-1 align-middle">{{ item.book.rentPrice * item.quantityRent }}
               €</td>
