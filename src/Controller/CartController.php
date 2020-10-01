@@ -93,6 +93,53 @@ class CartController extends AbstractController
     }
 
     /**
+     * @Route("/panier/rentRemove/{id}", name="rent_remove")
+     */
+    public function RentRemove($id, Session $session){
+
+      $panierRent =  $session->get('panierRent', []);
+
+      if(!empty($panierRent[$id])){
+        $panierRent[$id]--;
+      } else {
+        $panierRent[$id] = 1;
+      }
+
+      if(!empty($panierRent[$id])){
+      } else {
+      unset($panierRent[$id]);
+      }
+
+      $session->set('panierRent', $panierRent);
+
+      return $this->redirectToRoute("cart_index");
+    }
+
+    /**
+     * @Route("/panier/adRemove/{id}", name="add_remove")
+     */
+    public function AddRemove($id, Session $session){
+
+      $panier =  $session->get('panier', []);
+
+      if(!empty($panier[$id])){
+        $panier[$id]--;
+      } else {
+        $panier[$id] = 1;
+      }
+
+      if(!empty($panier[$id])){
+      } else {
+      unset($panier[$id]);
+      }
+
+      $session->set('panier', $panier);
+
+      return $this->redirectToRoute("cart_index");
+    }
+
+
+    /**
      * @Route("/panier/remove/{id}", name="cart_remove")
      */
     public function remove($id, Session $session ){

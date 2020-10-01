@@ -27,7 +27,10 @@
             <td class="text-center col-1 align-middle">{{ item.book.soldPrice }}
               €</td>
             <td class="text-center col-1 align-middle"></td>
-            <td class="text-center col-1 align-middle">{{ item.quantity }} </td>
+            <td class="text-center col-1 align-middle">{{ item.quantity }}
+              <a href="{{ path('cart_add', {'id' : item.book.id}) }}" class="btn btn-primary">+<a>
+                <a href="{{ path('add_remove', {'id' : item.book.id}) }}" class="btn btn-primary">-<a>
+              </td>
             <td class="text-center col-1 align-middle">{{ item.book.soldPrice * item.quantity }}
               €</td>
             <td class="align-middle">
@@ -43,14 +46,11 @@
             <td class="text-center col-1 align-middle"></td>
             <td class="text-center col-1 align-middle">{{ item.book.rentPrice }}
               €</td>
-<<<<<<< HEAD
-            <td class="text-center col-1 align-middle">{{ item.quantity }}
+            <td class="text-center col-1 align-middle">{{ item.quantityRent }}
+              <a href="{{ path('cart_rent', {'id' : item.book.id}) }}" class="btn btn-primary">+<a>
+              <a href="{{ path('rent_remove', {'id' : item.book.id}) }}" class="btn btn-primary">-<a>
             </td>
-            <td class="text-center col-1 align-middle">{{ item.book.rentPrice * item.quantity }}
-=======
-            <td class="text-center col-1 align-middle">{{ item.quantityRent }}</td>
             <td class="text-center col-1 align-middle">{{ item.book.rentPrice * item.quantityRent }}
->>>>>>> 0399ecf9b8fed1d27ef7c908d387c544c3be4bb2
               €</td>
             <td class="align-middle">
               <a href="{{ path('cart_removeRent', {'id': item.book.id}) }}" class="btn btn-danger">
