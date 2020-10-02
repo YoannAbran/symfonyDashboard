@@ -1,25 +1,40 @@
 <?php
 
-namespace App\Controller;
+namespace App\Command;
+
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Mime\Address;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use App\Entity\User;
 use App\Entity\Book;
 use App\Entity\CustomerFlow;
 use App\Entity\Flow;
 
-class MailEndRentController extends AbstractController
+class MailEndRentCommand extends Command
 {
-    /**
-     * @Route("/mail/end/rent", name="mail_end_rent")
-     */
-     public function sendEmail(MailerInterface $mailer)
+  protected static $defaultName = 'app:send-mail';
+  private $mail;
+
+  public function __construct(MailerInterface $mail, ContainerInterface $container, EntityManagerInterface $em)
+  	{
+  		parent::__construct();
+
+  		$this->mail = $mail;
+      $this->container = $container;
+  		$this->em = $em;
+  	}
+
+     protected function execute(InputInterface $input, OutputInterface $output)
      {
-       $em = $this->getDoctrine()->getManager();
+       $em = $this->container->get('doctrine')->getManager();
        $date = new \DateTime('now');
        $mailDate = new \DateTime('now');
        $retunMailDate = $mailDate->add(new \DateInterval('P6D'));
@@ -59,9 +74,10 @@ $customerFlow  = $em->getRepository(CustomerFlow::class)
 
 
 
-  $mailer->send($email);
+  $this->mail->send($email);
+  $output->writeln('Successful you send a self email');
   }
   }
-  return $this->render('home.html.twig');
+return Command::SUCCESS;
 }
 }
