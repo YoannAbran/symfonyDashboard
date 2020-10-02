@@ -22,45 +22,71 @@
 
         {% for item in panierAchat %}
           <tr>
-            <td class="text-left col-8"><img class="img-fluid col-2" src="img/photo/{{ item.book.photo }}"><a href="{{ path('book', {'id': item.book.getId }) }}" class="btn btn-link text-body">{{ item.book.title }}</a></td>
-            <td class="text-center col-1 align-middle text-nowrap">{{ item.book.soldPrice }} €</td>
+            <td class="text-left col-8"><img class="img-fluid col-2" src="img/photo/{{ item.book.photo }}">
+              <a href="{{ path('book', {'id': item.book.getId }) }}" class="btn btn-link text-body">{{ item.book.title }}</a>
+            </td>
+            <td class="text-center col-1 align-middle text-nowrap">{{ item.book.soldPrice }}
+              €</td>
             <td class="text-center col-1 align-middle"></td>
             <td class="text-center col-1 align-middle">
-            <div class="d-flex">
 
-              <a href="{{ path('add_remove', {'id' : item.book.id}) }}" class="btn btn-link text-primary align-bottom" title="Retirer" onclick="clickAndDisable(this);"><i class="fas fa-minus"></i></a>
-
-              <span class="mx-1 mt-2 align-bottom">{{ item.quantity }}</span>
+              <div class="d-flex">
+                <a href="{{ path('add_remove', {'id' : item.book.id}) }}" class="btn btn-link text-primary align-bottom" title="Retirer" onclick="clickAndDisable(this);">
+                  <i class="fas fa-minus"></i>
+                </a>
+                <span class="mx-1 mt-2 align-bottom">{{ item.quantity }}</span>
                 {% if item.book.getStock > 0 %}
-              <a href="{{ path('cart_add', {'id' : item.book.id}) }}" class="btn btn-link text-primary"title="Ajouter" onclick="clickAndDisable(this);"><i class="fas fa-plus"></i></a>
-              {% else %}
-                <span class="btn btn-link text-dark"title="Ajouter"><i class="fas fa-plus"></i></span>
+                  <a href="{{ path('cart_add', {'id' : item.book.id}) }}" class="btn btn-link text-primary" title="Ajouter" onclick="clickAndDisable(this);">
+                    <i class="fas fa-plus"></i>
+                  </a>
+                {% else %}
+                  <span class="btn btn-link text-dark" title="Ajouter">
+                    <i class="fas fa-plus"></i>
+                  </span>
                 {% endif %}
-                  </div>
+              </div>
+
             </td>
-            <td class="text-center col-1 align-middle text-nowrap">{{ item.book.soldPrice * item.quantity }} €</td>
+            <td class="text-center col-1 align-middle text-nowrap">{{ item.book.soldPrice * item.quantity }}
+              €</td>
             <td class="align-middle">
-                <a href="{{ path('cart_remove', {'id': item.book.id}) }}" class="btn btn-link text-danger" title="Supprimer" onclick="clickAndDisable(this);"><i class="fas fa-trash"></i></a>
+              <a href="{{ path('cart_remove', {'id': item.book.id}) }}" class="btn btn-link text-danger" title="Supprimer" onclick="clickAndDisable(this);">
+                <i class="fas fa-trash"></i>
+              </a>
             </td>
           </tr>
         {% endfor %}
         {% for item in panierLocation %}
           <tr>
-            <td class="text-left col-8"><img class="img-fluid col-2" src="img/photo/{{ item.book.photo }}"><a href="{{ path('book', {'id': item.book.getId }) }}" class="btn btn-link text-body">{{ item.book.title }}</a></td>
-            <td class="text-center col-1 align-middle"></td>
-            <td class="text-center col-1 align-middle text-nowrap">{{ item.book.rentPrice }} €</td>
-            <td class="text-center col-1 align-middle">
-              <a href="{{ path('rent_remove', {'id' : item.book.id}) }}" class="btn btn-link text-primary" title="Retirer" onclick="clickAndDisable(this);"><i class="fas fa-minus"></i><a>
-              <span class="mx-1">{{ item.quantityRent }}</span>
-              {% if item.book.getStock > 0 %}
-            <a href="{{ path('cart_rent', {'id' : item.book.id}) }}" class="btn btn-link text-primary"title="Ajouter" onclick="clickAndDisable(this);"><i class="fas fa-plus"></i></a>
-            {% else %}
-              <span class="btn btn-link text-dark"title="Ajouter"><i class="fas fa-plus"></i></span>
-              {% endif %}
+            <td class="text-left col-8"><img class="img-fluid col-2" src="img/photo/{{ item.book.photo }}">
+              <a href="{{ path('book', {'id': item.book.getId }) }}" class="btn btn-link text-body">{{ item.book.title }}</a>
             </td>
-            <td class="text-center col-1 align-middle text-nowrap">{{ item.book.rentPrice * item.quantityRent }} €</td>
+            <td class="text-center col-1 align-middle"></td>
+            <td class="text-center col-1 align-middle text-nowrap">{{ item.book.rentPrice }}
+              €</td>
+            <td class="text-center col-1 align-middle">
+              <div class="d-flex">
+                <a href="{{ path('rent_remove', {'id' : item.book.id}) }}" class="btn btn-link text-primary align-bottom" title="Retirer" onclick="clickAndDisable(this);">
+                  <i class="fas fa-minus"></i>
+                </a>
+                <span class="mx-1 mt-2 align-bottom">{{ item.quantityRent }}</span>
+                {% if item.book.getStock > 0 %}
+                  <a href="{{ path('cart_rent', {'id' : item.book.id}) }}" class="btn btn-link text-primary" title="Ajouter" onclick="clickAndDisable(this);">
+                    <i class="fas fa-plus"></i>
+                  </a>
+                {% else %}
+                  <span class="btn btn-link text-dark" title="Ajouter">
+                    <i class="fas fa-plus"></i>
+                  </span>
+                {% endif %}
+              </div>
+            </td>
+            <td class="text-center col-1 align-middle text-nowrap">{{ item.book.rentPrice * item.quantityRent }}
+              €</td>
             <td class="align-middle">
-                <a href="{{ path('cart_removeRent', {'id': item.book.id}) }}" class="btn btn-link text-danger" title="Supprimer" onclick="clickAndDisable(this);"><i class="fas fa-trash"></i></a>
+              <a href="{{ path('cart_removeRent', {'id': item.book.id}) }}" class="btn btn-link text-danger" title="Supprimer" onclick="clickAndDisable(this);">
+                <i class="fas fa-trash"></i>
+              </a>
             </td>
           </tr>
         {% endfor %}
@@ -70,15 +96,15 @@
           <td></td>
 
           <td colspan="3" class="text-right font-weight-bold">Total :</td>
-          <td class="text-center col-2 align-middle font-weight-bold text-nowrap">{{ total }} €</td>
+          <td class="text-center col-2 align-middle font-weight-bold text-nowrap">{{ total }}
+            €</td>
         </tr>
       </tfoot>
     </table>
-          <hr>
+    <hr>
     <div class="container-fluid d-flex my-5">
-          <a href="{{ path('bookBuy')}}" class="btn btn-primary m-auto" title="Fais chauffer la CB !" onclick="clickAndDisable(this);">Valider ma commande</a>
+      <a href="{{ path('bookBuy')}}" class="btn btn-primary m-auto" title="Fais chauffer la CB !" onclick="clickAndDisable(this);">Valider ma commande</a>
     </div>
-
 
   {% else %}
     <p>... est vide !</p>
